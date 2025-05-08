@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatchk
+  namespace: default
+  labels:
+    app: chatchk
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chatchk
+  template:
+    metadata:
+      labels:
+        app: chatchk
+    spec:
+      containers:
+      - name: chatchk
+        image: nethopper/chatchk:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatchk
+  namespace: default
+  labels:
+    app: chatchk
+spec:
+  selector:
+    app: chatchk
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chatchk
+  namespace: default
+  labels:
+    app: chatchk
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: chatchk.mynethopper.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: chatchk
+            port:
+              number: 80
