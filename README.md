@@ -1,18 +1,17 @@
 # chatchk
 Chatchk provides example source code demonstrating how to interact with
-Open WebUI and Ollama API endpoints within a Nethopper Private AI
-instance.
+Open WebUI and Ollama API endpoints within a Private AI instance.
 
 By default, it sends a "Why is the sky blue?" prompt to both Open WebUI
 and Ollama APIs, using the gemma2:9b model, which is pre-installed in a
-Nethopper Private AI instance.
+Private AI instance.
 
 This project is written in Go (version 1.24).
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Copyright © 2025 [Nethopper, Inc.](nethopper.io). All rights reserved.
+Copyright © 2025. All rights reserved.
 
 ## Modules
 Each package listed below resides in ./src/\<package name\>. They are listed in
