@@ -35,9 +35,9 @@ EXPOSE 8080
 # Environment variables
 ENV OLLAMA_KNOWLEDGE_FILE=./knowledge_files/customer_support_log.txt
 # Follwoing is temporary: mv to k8s manifest/helm when ready
-ENV OLLAMA_IP=10.0.0.156
+ENV OLLAMA_IP=<IP Address>
 ENV OLLAMA_PORT=30111
-ENV OLLAMA_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhY2JjNjhjLTNhOWEtNDA3Ni05OTNmLWI4MDFhM2Y1ZGRmMyJ9.eOIfMcSxj1W3yCDS3-1_uaE-PmZuGlBs0A13HII8MDI
+ENV OLLAMA_API_KEY=<API Key>
 
 # Run the binary
 CMD ["./chatchk"]
