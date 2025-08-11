@@ -33,7 +33,7 @@ The chatchk project is built from the software/chatchk directory.
 
 This directory includes a Makefile that supports building a Go executable and
 creating a Docker image. The Makefile provides targets for building, running,
-and pushing the Docker image to Nethopper's namespace on Docker Hub.
+and pushing the Docker image to ddonahuex's namespace on Docker Hub.
 
 For a complete list of build targets and their usage, refer to the Make Targets
 section below.
@@ -52,10 +52,11 @@ To build a target:
 | --------- | ------- |
 | build | Executes a Go build for the chatchk executable |
 | clean | Executes a Go clean for all modules |
-| docker-build | Docker build for nethopper/chatchk Docker image |
+| docker-build | Docker build for ddonahuex/chatchk Docker image |
 | docker-prod | Executes docker-build and docker-push make targets |
-| docker-push | Docker push for of nethopper/chatchk to the Nethopper Docker Hub namespace |
-| docker-run | Executes docker-build then issues a docker run of the nethopper/chatchk image |
+| docker-push | Docker push for of ddonahuex/chatchk to the ddonahuex Docker Hub namespace |
+| docker-run | Executes docker-build then issues a docker run of the ddonahuex/chatchk image |
+| docker-sbom | Executes docker-build then generates CycloneDX formatted SBOM using syft |
 | help | Print this help menu |
 | prod | Executes build and docker-prod make targets |
 | test | Executes a Go test for all modules (none currently) |
@@ -64,6 +65,10 @@ To build a target:
 Chatchk can be deployed on bare metal, in a Docker container, or within a
 Kubernetes cluster. Detailed instructions for each deployment method are
 provided in the subsections below.
+
+## Software Bill of Materials (SBOM)
+The file chatchk-1.0.0-bom.json is an AI-generated CycloneDX SBOM for the 
+chatchk project. It was created based on the project's Dockerfile.
 
 
 

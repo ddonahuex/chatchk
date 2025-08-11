@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: chatchk
-        image: nethopper/chatchk:latest
+        image: ddonahuex/chatchk:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
@@ -70,7 +70,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: chatchk.mynethopper.net
+  - host: chatchk.ddonahuex.io
     http:
       paths:
       - path: /

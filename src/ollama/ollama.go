@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"nethopper.io/utils"
+	"ddonahuex.io/utils"
 )
 
 // RunQuery: Use Ollama API to execute a given prompt using a given model

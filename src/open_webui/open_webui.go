@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"nethopper.io/utils"
+	"ddonahuex.io/utils"
 )
 
 type Message struct {

@@ -1,3 +1,3 @@
-module nethopper.io/utils
+module ddonahuex.io/utils
 
 go 1.24

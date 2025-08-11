@@ -7,12 +7,13 @@ import (
 	"strconv"
 	"strings"
 
-	"nethopper.io/admin"
-	"nethopper.io/ingest"
-	"nethopper.io/knowledge"
-	"nethopper.io/ollama"
-	"nethopper.io/open_webui"
-	"nethopper.io/prompts"
+	"ddonahuex.io/ingest"
+
+	"ddonahuex.io/admin"
+	"ddonahuex.io/knowledge"
+	"ddonahuex.io/ollama"
+	"ddonahuex.io/open_webui"
+	"ddonahuex.io/prompts"
 )
 
 func main() {

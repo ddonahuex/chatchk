@@ -2,9 +2,9 @@
 BINARY_NAME = chatchk
 MAIN_MODULE = ./src/chatchk
 MODULES = ingest knowledge prompts admin
-REGISTRY = nethopper
+REGISTRY = ddonahuex
 IMAGE_NAME = chatchk
-TAG ?= latest
+TAG ?= 1.0.0
 IMAGE = $(REGISTRY)/$(IMAGE_NAME):$(TAG)
 
 # Default target
@@ -36,7 +36,7 @@ clean:
 	done
 
 # Build Docker build & push
-docker-prod: docker-build docker-push
+docker-prod: docker-sbom docker-push
 
 # Build Docker image
 docker-build:
@@ -52,14 +52,19 @@ docker-push:
 	@echo "Running Docker push ..."
 	@docker push $(IMAGE)
 
+docker-sbom: docker-build
+	@echo "Generating SBOM (CycloneDX) ..."
+	@syft docker:$(IMAGE) -o cyclonedx-json > $(IMAGE_NAME):$(TAG)-bom.json
+
 help:
 	@echo "Make Targets:"
-	@echo "  build\t\tExecutes a Go build for the chatchk executable"
+	@echo "  build\t\tExecutes a Go build for the $(IMAGE_NAME) executable"
 	@echo "  clean\t\tExecutes a Go clean for all modules"
-	@echo "  docker-build\tDocker build for nethopper/chatchk Docker image"
+	@echo "  docker-build\tDocker build for $(REGISTRY)/$(IMAGE_NAME) Docker image"
 	@echo "  docker-prod\tExecutes docker-build and docker-push make targets"
-	@echo "  docker-push\tDocker push for of nethopper/chatchk to the Nethopper Docker Hub namespace"
-	@echo "  docker-run\tExecutes docker-build then issues a docker run of the nethopper/chatchk image"
+	@echo "  docker-push\tDocker push for of $(REGISTRY)/$(IMAGE_NAME) to the $(REGISTRY) Docker Hub namespace"
+	@echo "  docker-run\tExecutes docker-build then issues a docker run of the $(REGISTRY)/$(IMAGE_NAME) image"
+	@echo "  docker-sbom\tExecutes docker-build then generates CycloneDX formatted SBOM using syft"
 	@echo "  help\t\tPrint this help menu"
 	@echo "  prod\t\tExecutes build and docker-prod make targets"
 	@echo "  test\t\tExecutes a Go test for all modules"

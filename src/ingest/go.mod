@@ -1,3 +1,3 @@
-module nethopper.io/ingest
+module ddonahuex.io/ingest
 
 go 1.24

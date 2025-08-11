@@ -1,3 +1,3 @@
-module nethopper.io/admin
+module ddonahuex.io/admin
 
 go 1.24
