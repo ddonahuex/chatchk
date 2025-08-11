@@ -1,0 +1,70 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:a7b8c9d0-e1f2-4a3b-9c4d-5e6f7890abcd",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-08-11T15:20:00Z",
+    "tools": [
+      {
+        "vendor": "xAI",
+        "name": "Manual SBOM Generator",
+        "version": "1.0"
+      }
+    ],
+    "component": {
+      "type": "container",
+      "name": "chatchk",
+      "version": "1.0.0",
+      "purl": "pkg:docker/chatchk@1.0.0?platform=linux/amd64",
+      "bom-ref": "pkg:docker/chatchk@1.0.0"
+    }
+  },
+  "components": [
+    {
+      "type": "operating-system",
+      "name": "alpine",
+      "version": "3.20",
+      "purl": "pkg:apk/alpine/alpine@3.20",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "bom-ref": "pkg:apk/alpine/alpine@3.20"
+    },
+    {
+      "type": "application",
+      "name": "chatchk",
+      "version": "1.0.0",
+      "purl": "pkg:generic/chatchk@1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "Proprietary"
+          }
+        }
+      ],
+      "bom-ref": "pkg:generic/chatchk@1.0.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:docker/chatchk@1.0.0",
+      "dependsOn": [
+        "pkg:apk/alpine/alpine@3.20",
+        "pkg:generic/chatchk@1.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:apk/alpine/alpine@3.20",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:generic/chatchk@1.0.0",
+      "dependsOn": []
+    }
+  ]
+}
