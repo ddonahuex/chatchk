@@ -54,7 +54,7 @@ docker-push:
 
 docker-sbom: docker-build
 	@echo "Generating SBOM (CycloneDX) ..."
-	@syft docker:$(IMAGE) -o cyclonedx-json > $(IMAGE_NAME):$(TAG)-bom.json
+	@syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
 
 help:
 	@echo "Make Targets:"
