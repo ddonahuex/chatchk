@@ -66,7 +66,7 @@ Chatchk can be deployed on bare metal, in a Docker container, or within a
 Kubernetes cluster. Detailed instructions for each deployment method are
 provided in the subsections below.
 
-## Software Bill of Materials (SBOM)
+# Software Bill of Materials (SBOM)
 The file chatchk-1.0.0-bom.json is a CycloneDX-formatted SBOM generated using Syft 
 for the chatchk project.
 
