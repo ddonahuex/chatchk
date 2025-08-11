@@ -67,8 +67,8 @@ Kubernetes cluster. Detailed instructions for each deployment method are
 provided in the subsections below.
 
 ## Software Bill of Materials (SBOM)
-The file chatchk-1.0.0-bom.json is an AI-generated CycloneDX SBOM for the 
-chatchk project. It was created based on the project's Dockerfile.
+The file chatchk-1.0.0-bom.json is a CycloneDX-formatted SBOM generated using Syft 
+for the chatchk project.
 
 
 
