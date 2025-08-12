@@ -56,7 +56,7 @@ To build a target:
 | docker-prod | Executes docker-build and docker-push make targets |
 | docker-push | Docker push for of ddonahuex/chatchk to the ddonahuex Docker Hub namespace |
 | docker-run | Executes docker-build then issues a docker run of the ddonahuex/chatchk image |
-| docker-sbom | Executes docker-build then generates CycloneDX formatted SBOM using syft |
+| docker-sbom | Executes docker-build then generates SBOM and Vulnerability Report |
 | help | Print this help menu |
 | prod | Executes build and docker-prod make targets |
 | test | Executes a Go test for all modules (none currently) |
@@ -66,9 +66,11 @@ Chatchk can be deployed on bare metal, in a Docker container, or within a
 Kubernetes cluster. Detailed instructions for each deployment method are
 provided in the subsections below.
 
-# Software Bill of Materials (SBOM)
+# Software Bill of Materials (SBOM) & Vulernability Report
 The file chatchk-1.0.0-bom.json is a CycloneDX-formatted SBOM generated using Syft 
 for the chatchk project.
 
+The file chatchk:1.0.0-vuln-report.json is a vulnerability report generated
+using grype.
 
 

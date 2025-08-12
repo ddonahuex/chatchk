@@ -55,6 +55,7 @@ docker-push:
 docker-sbom: docker-build
 	@echo "Generating SBOM (CycloneDX) ..."
 	@syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
+	@grype docker:ddonahuex/chatchk:1.0.0 -o json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-vuln-report.json
 
 help:
 	@echo "Make Targets:"
@@ -64,7 +65,7 @@ help:
 	@echo "  docker-prod\tExecutes docker-build and docker-push make targets"
 	@echo "  docker-push\tDocker push for of $(REGISTRY)/$(IMAGE_NAME) to the $(REGISTRY) Docker Hub namespace"
 	@echo "  docker-run\tExecutes docker-build then issues a docker run of the $(REGISTRY)/$(IMAGE_NAME) image"
-	@echo "  docker-sbom\tExecutes docker-build then generates CycloneDX formatted SBOM using syft"
+	@echo "  docker-sbom\tExecutes docker-build then generates SBOM and Vulnerability Report"
 	@echo "  help\t\tPrint this help menu"
 	@echo "  prod\t\tExecutes build and docker-prod make targets"
 	@echo "  test\t\tExecutes a Go test for all modules"
