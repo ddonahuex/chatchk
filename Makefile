@@ -55,6 +55,7 @@ docker-push:
 docker-sbom: docker-build
 	@echo "Generating SBOM (CycloneDX) ..."
 	@syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
+	@echo "Generating Vulnerability Report ..."
 	@grype docker:ddonahuex/chatchk:1.0.0 -o json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-vuln-report.json
 
 help:
