@@ -42,7 +42,7 @@ For a complete list of build targets and their usage, refer to the Make Targets
 section below.
 
 There are two build options for chatchk: Standard and Chainguard. These build
-types are detailed in follwoing sub-sections.
+types are detailed in following sub-sections.
 
 ## make
 The table below lists and describes the build targets and variables.
@@ -89,11 +89,11 @@ The straightforward demo contains 2 steps:
 2. Chainguard build, see 0 CVEs
 
 Execute the followming commands to run a Chainguard demo.
+Standard build: See multiple CVEs
 > $ make clean && make docker-build
-See multiple CVEs
 
+Chainguard: See 0 CVEs
 > $ make clean && make TYPE=chainguard docker-build
-See 0 CVEs
 
 # Run
 Chatchk can be deployed on bare metal, in a Docker container, or within a
