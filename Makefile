@@ -6,6 +6,7 @@ REGISTRY = ddonahuex
 IMAGE_NAME = chatchk
 TAG ?= 1.0.0
 IMAGE = $(REGISTRY)/$(IMAGE_NAME):$(TAG)
+TYPE ?= standard
 
 # Default target
 all: build
@@ -31,6 +32,7 @@ test:
 clean:
 	@echo "Cleaning..."
 	@rm -f $(MAIN_MODULE)/$(BINARY_NAME)
+	@rm Dockerfile >/dev/null 2>&1 || true
 	@for dir in $(MAIN_MODULE) $(MODULES); do \
 		cd $$dir && go clean && cd ..; \
 	done
@@ -40,8 +42,15 @@ docker-prod: docker-sbom docker-push
 
 # Build Docker image
 docker-build:
+	@echo "Seeting build type to $(TYPE)"
+	@ln -s Dockerfile-$(TYPE) Dockerfile
 	@echo "Building Docker image ..."
 	@docker build -t $(IMAGE) .
+	@echo "Generating SBOM (CycloneDX) ..."
+	@syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
+	@echo "Generating Vulnerability Report ..."
+	@grype docker:ddonahuex/chatchk:1.0.0 -o json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-vuln-report.json
+	@rm Dockerfile >/dev/null 2>&1 || true
 
 # Build & run Docker container
 docker-run: docker-build
@@ -52,21 +61,20 @@ docker-push:
 	@echo "Running Docker push ..."
 	@docker push $(IMAGE)
 
-docker-sbom: docker-build
-	@echo "Generating SBOM (CycloneDX) ..."
-	@syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
-	@echo "Generating Vulnerability Report ..."
-	@grype docker:ddonahuex/chatchk:1.0.0 -o json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-vuln-report.json
+#docker-sbom: docker-build
+#	@echo "Generating SBOM (CycloneDX) ..."
+# @syft docker:$(IMAGE) -o cyclonedx-json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-bom.json
+#	@echo "Generating Vulnerability Report ..."
+#	@grype docker:ddonahuex/chatchk:1.0.0 -o json | jq . > temp.json && mv temp.json $(IMAGE_NAME):$(TAG)-vuln-report.json
 
 help:
 	@echo "Make Targets:"
 	@echo "  build\t\tExecutes a Go build for the $(IMAGE_NAME) executable"
 	@echo "  clean\t\tExecutes a Go clean for all modules"
-	@echo "  docker-build\tDocker build for $(REGISTRY)/$(IMAGE_NAME) Docker image"
+	@echo "  docker-build\tDocker build, SBOM generation, & Vulnerability report for $(REGISTRY)/$(IMAGE_NAME) Docker image"
 	@echo "  docker-prod\tExecutes docker-build and docker-push make targets"
 	@echo "  docker-push\tDocker push for of $(REGISTRY)/$(IMAGE_NAME) to the $(REGISTRY) Docker Hub namespace"
 	@echo "  docker-run\tExecutes docker-build then issues a docker run of the $(REGISTRY)/$(IMAGE_NAME) image"
-	@echo "  docker-sbom\tExecutes docker-build then generates SBOM and Vulnerability Report"
 	@echo "  help\t\tPrint this help menu"
 	@echo "  prod\t\tExecutes build and docker-prod make targets"
 	@echo "  test\t\tExecutes a Go test for all modules"

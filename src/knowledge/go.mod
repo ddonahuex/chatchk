@@ -1,6 +1,6 @@
 module ddonahuex.io/knowledge
 
-go 1.24
+go 1.20
 
 require ddonahuex.io/utils v0.0.0
 

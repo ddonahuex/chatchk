@@ -35,11 +35,16 @@ This directory includes a Makefile that supports building a Go executable and
 creating a Docker image. The Makefile provides targets for building, running,
 and pushing the Docker image to ddonahuex's namespace on Docker Hub.
 
+In addition to building the Docker image, the build process generates an SBOM
+and Vulnerability Report using syft and grype respectively.
+
 For a complete list of build targets and their usage, refer to the Make Targets
 section below.
 
+
+
 ## make
-The table below lists and describes the build targets.
+The table below lists and describes the build targets and variables.
 
 To list build targets:
 > $ make help
@@ -52,15 +57,43 @@ To build a target:
 | --------- | ------- |
 | build | Executes a Go build for the chatchk executable |
 | clean | Executes a Go clean for all modules |
-| docker-build | Docker build for ddonahuex/chatchk Docker image |
+| docker-build | Docker build, SBOM generation, & Vulnerability report for ddonahuex/chatchk Docker image |
 | docker-prod | Executes docker-build and docker-push make targets |
 | docker-push | Docker push for of ddonahuex/chatchk to the ddonahuex Docker Hub namespace |
 | docker-run | Executes docker-build then issues a docker run of the ddonahuex/chatchk image |
-| docker-sbom | Executes docker-build then generates SBOM and Vulnerability Report |
 | help | Print this help menu |
 | prod | Executes build and docker-prod make targets |
 | test | Executes a Go test for all modules (none currently) |
- 
+
+### Build types - Standard and Chainguard
+The chatchk docker image can either be built using a standard Dockerfile or 
+Chainguard Dockerfile. The make variable that controls the build type is **TYPE**.
+
+Valid values for *TYPE* are *standard* and *chainguard*. There is no need to
+specify the TYPE for the standard build.
+
+The standard image (default) uses the Dockerfile-standard for the build. It 
+intentionally includes Golang version 1.20.5 because that version contains
+multiple CVEs, which is evident in grype's output during the build.
+
+The Chainguard image uses the Dockerfile-chainguard for the build. It uses a 
+zero CVE Chainguard Go image, which is also evident by grype's output during
+the build.
+
+The two build types are for demo purposes.
+
+#### Chainguard Demo
+The straightforward demo contains 2 steps:
+1. Standard build, see multiple CVEs
+2. Chainguard build, see 0 CVEs
+
+Execute the followming commands to run a Chainguard demo.
+> $ make clean && make docker-build
+See multiple CVEs
+
+> $ make clean && make TYPE=chainguard docker-build
+See 0 CVEs
+
 # Run
 Chatchk can be deployed on bare metal, in a Docker container, or within a
 Kubernetes cluster. Detailed instructions for each deployment method are
