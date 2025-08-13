@@ -41,7 +41,8 @@ and Vulnerability Report using syft and grype respectively.
 For a complete list of build targets and their usage, refer to the Make Targets
 section below.
 
-
+There are two build options for chatchk: Standard and Chainguard. These build
+types are detailed in follwoing sub-sections.
 
 ## make
 The table below lists and describes the build targets and variables.
@@ -69,14 +70,14 @@ To build a target:
 The chatchk docker image can either be built using a standard Dockerfile or 
 Chainguard Dockerfile. The make variable that controls the build type is **TYPE**.
 
-Valid values for *TYPE* are *standard* and *chainguard*. There is no need to
-specify the TYPE for the standard build.
+Valid values for *TYPE* are *standard* and *chainguard*. When not specified the
+build defaults to standard, so no need to TYPE for that build.
 
-The standard image (default) uses the Dockerfile-standard for the build. It 
+The standard image uses **Dockerfile-standard** for the build. It 
 intentionally includes Golang version 1.20.5 because that version contains
 multiple CVEs, which is evident in grype's output during the build.
 
-The Chainguard image uses the Dockerfile-chainguard for the build. It uses a 
+The Chainguard image uses **Dockerfile-chainguard** for the build. It uses a 
 zero CVE Chainguard Go image, which is also evident by grype's output during
 the build.
 
